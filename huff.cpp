@@ -6,8 +6,9 @@
 #include <map>
 using namespace std;
 
-#define pqueue(T, cmp) priority_queue<T, vector<T>, decltype(cmp)*>
+//#define pqueue(T, cmp) priority_queue<T, vector<T>, decltype(cmp)>
 
+//Definition of the node of the huffman tree.
 class MHnode {
     public:
         char data;
@@ -22,27 +23,11 @@ class MHnode {
         }
 };
 
-
-auto cmp(MHnode* l, MHnode* r) {
+//compare function for the priority minheap queue
+bool cmp(MHnode* l, MHnode* r) {
     return (l->freq > r->freq);
 }
 
-/*
-class Compare {
-    public: 
-
-        auto cmp(MHnode* l, MHnode* r) {
-            return (l->freq > r->freq);
-        }
-};
-
-
-struct compare {
-    bool op(const MHnode& l, const MHnode& r) {
-        return (l.freq > r.freq);
-    }
-};
-*/
 
 priority_queue<MHnode*, vector<MHnode*>, decltype(cmp)*> MinHeap(cmp);
 
@@ -52,8 +37,6 @@ class Huffmancoding {
 
         static void Codes(map<char, int> m1 ,int size) {
             MHnode *left, *right, *top;
-
-            //pqueue(MHnode*, cmp) MinHeap(cmp);
 
             for (auto it = m1.begin(); it != m1.end(); it++) {
                 MinHeap.push(new MHnode(it->first, it->second));
@@ -131,10 +114,12 @@ class Huffmancoding {
         //static void Decoding(MHnode* root);
 };
 
+map<char, string> Huffmancoding::codes = {}; //Initialise the map for the codes of the characters
+
 int main() {
 
-    char data[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    int freq[] = {6, 8, 10, 21, 54, 75};
+    char data[] = {'a', 'b', 'c', 'd', 'e', 'f'}; //the characters from the frequency table
+    int freq[] = {6, 8, 10, 21, 54, 75}; //respective frequencies of the characters
 
     map<char, int> dataset;
 
@@ -152,7 +137,13 @@ int main() {
 
     Huffmancoding::Codes(dataset, l1);
 
-    cout << "Characters with their frequencies: " << "\n";
+    cout << "Original Frequency Table: " << "\n";
+
+    for (auto it3 = dataset.begin(); it3 != dataset.end(); it3++) {
+        cout << it3->first << ": " << it3->second << "\n";
+    }
+
+    cout << "Encoded Frequency Table: " << "\n";
 
     for (auto it2 = Huffmancoding::codes.begin(); it2 != Huffmancoding::codes.end(); it2++) {
         cout << it2->first << ": " << it2->second << "\n";
