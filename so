@@ -1,0 +1,30 @@
+/*SAMPLE OUTPUT*/
+
+Enter size of frequency table: 
+6
+Enter name and frequency of element1
+a 5
+Enter name and frequency of element2
+b 9
+Enter name and frequency of element3
+c 12
+Enter name and frequency of element4
+d 13
+Enter name and frequency of element5
+e 16
+Enter name and frequency of element6
+f 45
+Original Frequency Table: 
+a: 5
+b: 9
+c: 12
+d: 13
+e: 16
+f: 45
+Encoded Frequency Table: 
+a: 1100
+b: 1101
+c: 100
+d: 101
+e: 111
+f: 0
