@@ -29,20 +29,21 @@ bool cmp(MHnode* l, MHnode* r) {
 }
 
 
-priority_queue<MHnode*, vector<MHnode*>, decltype(cmp)*> MinHeap(cmp);
+priority_queue<MHnode*, vector<MHnode*>, decltype(cmp)*> MinHeap(cmp); // priority queue for the heap
 
 class Huffmancoding {
     public:
-        static map<char, string> codes;
+        static map<char, string> codes; // creating a map of codes, where char is the character  
+                                        // and string is the encoded binary string
 
-        static void Codes(map<char, int> m1 ,int size) {
+        static void Codes(map<char, int> m1 ,int size) {  // encodes the frequency tables
             MHnode *left, *right, *top;
 
-            for (auto it = m1.begin(); it != m1.end(); it++) {
+            for (auto it = m1.begin(); it != m1.end(); it++) { // pushes the tree nodes to the heap
                 MinHeap.push(new MHnode(it->first, it->second));
             }
 
-            while (MinHeap.size() != 1) {
+            while (MinHeap.size() != 1) { // simplifying the tree nodes into an element
                 left = MinHeap.top();
                 MinHeap.pop();
 
@@ -60,7 +61,7 @@ class Huffmancoding {
             storecodes(MinHeap.top(), "");
         }
 
-        static void printcodes(MHnode* root, string str) {
+        static void printcodes(MHnode* root, string str) { // used to display the binary encoded freq data
 
             if (!root) {
                 return;
@@ -74,7 +75,7 @@ class Huffmancoding {
             printcodes(root->right, str+"1");
         }
 
-        static void storecodes(MHnode* root, string str) {
+        static void storecodes(MHnode* root, string str) { // stores the encoded frequency table data
 
             if (root == NULL) {
                 return;
@@ -88,29 +89,6 @@ class Huffmancoding {
             storecodes(root->right, str+"1");
         }
 
-        static string decoding(MHnode* root, string s) {
-
-            string ans = "";
-            MHnode* curr = root;
-
-            for (int i= 0; i < s.size(); i++) {
-                if (s[i] == '0') {
-                    curr = curr->left;
-                }
-
-                else {
-                    curr = curr->right;
-                }
-
-                if (curr->left == NULL && curr->right == NULL) {
-                    ans += curr->data;
-                    curr = root; 
-                }
-            }
-
-            return ans + '\0';
-        }
-
         //static void Decoding(MHnode* root);
 };
 
@@ -120,7 +98,6 @@ int main() {
 
     map<char, int> dataset; //Frequency table that is represented as a map.
 
-    
     int size; //Size of frequency table (no. of rows)
     cout << "Enter size of frequency table: " << "\n";
     cin >> size;
@@ -128,19 +105,17 @@ int main() {
     for (int i= 0; i < size; i++) {
         char temp;
         int temp2;
-        cout << "Enter name and frequency of element" << i+1 << "\n";
-        cin >> temp >> temp2;
+        cout << "Enter element " << i+1 << "\n";
+        cin >> temp;
+        cout << "Enter frequency of element " << i+1 << "\n";
+        cin >> temp2;
 
         dataset.insert({temp, temp2});
 
     }
-    
-    /*
-    char data[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    int freq[] = {5, 9, 12, 13, 16, 45};
-    */
 
-    Huffmancoding::Codes(dataset, size);
+
+    Huffmancoding::Codes(dataset, size); // create a map using the dataset
 
     cout << "Original Frequency Table: " << "\n";
 
