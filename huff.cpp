@@ -118,24 +118,26 @@ map<char, string> Huffmancoding::codes = {}; //Initialise the map for the codes 
 
 int main() {
 
-    char data[] = {'a', 'b', 'c', 'd', 'e', 'f'}; //the characters from the frequency table
-    int freq[] = {6, 8, 10, 21, 54, 75}; //respective frequencies of the characters
+    map<char, int> dataset; //Frequency table that is represented as a map.
 
-    map<char, int> dataset;
+    int size; //Size of frequency table (no. of rows)
+    cout << "Enter size of frequency table: " << "\n";
+    cin >> size;
 
-    int l1 = sizeof(data)/sizeof(data[0]);
-    int l2 = sizeof(freq)/sizeof(freq[0]);
+    for (int i= 0; i < size; i++) {
+        char temp;
+        int temp2;
+        cout << "Enter element " << i+1 << "\n";
+        cin >> temp;
+        cout << "Enter frequency of element " << i+1 << "\n";
+        cin >> temp2;
 
-    if (l1 == l2) {
-        for (int i= 0; i < l1; i++) {
-            dataset[data[i]] = freq[i];
-        }
-    } 
-    else {
-        cout << "Invalid";
+        dataset.insert({temp, temp2});
+
     }
 
-    Huffmancoding::Codes(dataset, l1);
+
+    Huffmancoding::Codes(dataset, size);
 
     cout << "Original Frequency Table: " << "\n";
 
