@@ -120,6 +120,7 @@ int main() {
 
     map<char, int> dataset; //Frequency table that is represented as a map.
 
+    
     int size; //Size of frequency table (no. of rows)
     cout << "Enter size of frequency table: " << "\n";
     cin >> size;
@@ -127,15 +128,17 @@ int main() {
     for (int i= 0; i < size; i++) {
         char temp;
         int temp2;
-        cout << "Enter element " << i+1 << "\n";
-        cin >> temp;
-        cout << "Enter frequency of element " << i+1 << "\n";
-        cin >> temp2;
+        cout << "Enter name and frequency of element" << i+1 << "\n";
+        cin >> temp >> temp2;
 
         dataset.insert({temp, temp2});
 
     }
-
+    
+    /*
+    char data[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int freq[] = {5, 9, 12, 13, 16, 45};
+    */
 
     Huffmancoding::Codes(dataset, size);
 
