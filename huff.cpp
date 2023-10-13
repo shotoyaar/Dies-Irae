@@ -29,13 +29,15 @@ bool cmp(MHnode* l, MHnode* r) {
 }
 
 
-priority_queue<MHnode*, vector<MHnode*>, decltype(cmp)*> MinHeap(cmp);
+priority_queue<MHnode*, vector<MHnode*>, decltype(cmp)*> MinHeap(cmp); // creation of priority queue for sorting
+                                                                        // elements based on frequency
 
 class Huffmancoding {
     public:
         static map<char, string> codes;
 
-        static void Codes(map<char, int> m1 ,int size) {
+        //function creates a binary tree from the frequency table
+        static void Codes(map<char, int> m1 ,int size) { 
             MHnode *left, *right, *top;
 
             for (auto it = m1.begin(); it != m1.end(); it++) {
@@ -60,6 +62,7 @@ class Huffmancoding {
             storecodes(MinHeap.top(), "");
         }
 
+        //function prints codes of the elements
         static void printcodes(MHnode* root, string str) {
 
             if (!root) {
@@ -74,6 +77,7 @@ class Huffmancoding {
             printcodes(root->right, str+"1");
         }
 
+        //function stores the binary tree encode of the elements
         static void storecodes(MHnode* root, string str) {
 
             if (root == NULL) {
@@ -88,30 +92,6 @@ class Huffmancoding {
             storecodes(root->right, str+"1");
         }
 
-        static string decoding(MHnode* root, string s) {
-
-            string ans = "";
-            MHnode* curr = root;
-
-            for (int i= 0; i < s.size(); i++) {
-                if (s[i] == '0') {
-                    curr = curr->left;
-                }
-
-                else {
-                    curr = curr->right;
-                }
-
-                if (curr->left == NULL && curr->right == NULL) {
-                    ans += curr->data;
-                    curr = root; 
-                }
-            }
-
-            return ans + '\0';
-        }
-
-        //static void Decoding(MHnode* root);
 };
 
 map<char, string> Huffmancoding::codes = {}; //Initialise the map for the codes of the characters
@@ -140,10 +120,14 @@ int main() {
     int freq[] = {5, 9, 12, 13, 16, 45};
     */
 
+    // binary tree formation of the given data
     Huffmancoding::Codes(dataset, size);
 
     cout << "Original Frequency Table: " << "\n";
 
+    //printing the original frequency table. auto is a variable type
+    //that can take any datatype
+    
     for (auto it3 = dataset.begin(); it3 != dataset.end(); it3++) {
         cout << it3->first << ": " << it3->second << "\n";
     }
