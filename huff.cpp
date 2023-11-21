@@ -4,6 +4,11 @@
 #include <string>
 #include <queue>
 #include <map>
+#include <random>
+
+#define MIN_FREQ 10
+#define SAFE 5
+
 using namespace std;
 
 //#define pqueue(T, cmp) priority_queue<T, vector<T>, decltype(cmp)>
@@ -92,6 +97,29 @@ class Huffmancoding {
             storecodes(root->right, str+"1");
         }
 
+        static void alert(map<char, int> m1, map<char, int> avg) {
+            vector<char> restock;
+
+            for (auto it1 = m1.begin(), it2 = avg.begin(); it1 != m1.end(), it2 != avg.end(); it1++, it2++) {
+                if (((it1->second - it2->second) <= 0) || ((it1->second - it2->second) <= MIN_FREQ)) {
+                    restock.push_back(it1->first);
+                }
+            }
+
+            cout << "The following elements need to be restocked!" << "\n";
+
+            for (int i= 0; i < restock.size(); i++) {
+                cout << restock[i] << "\n";
+            }
+        }
+
+        static void restock(map<char, int> m1, map<char, int> avg) {
+            for (auto it1 = m1.begin(), it2 = avg.begin(); it1 != m1.end(), it2 != avg.end(); it1++, it2++) {
+                if (((it1->second - it2->second) <= 0) || ((it1->second - it2->second) <= MIN_FREQ)) {
+                    it1->second = it1->second + (MIN_FREQ*SAFE);
+                }
+            }
+        }
 };
 
 map<char, string> Huffmancoding::codes = {}; //Initialise the map for the codes of the characters
@@ -99,20 +127,32 @@ map<char, string> Huffmancoding::codes = {}; //Initialise the map for the codes 
 int main() {
 
     map<char, int> dataset; //Frequency table that is represented as a map.
+    map<char, int> avgdata; //Frequency table of average usage of all the elements that exist in the actual dataset.
 
     
     int size; //Size of frequency table (no. of rows)
     cout << "Enter size of frequency table: " << "\n";
     cin >> size;
 
+    cout << "Enter details of the main frequency table" << "\n";
+
     for (int i= 0; i < size; i++) {
         char temp;
         int temp2;
-        cout << "Enter name and frequency of element" << i+1 << "\n";
+        cout << "Enter name and frequency of element " << i+1 << "\n";
         cin >> temp >> temp2;
 
         dataset.insert({temp, temp2});
+    }
 
+    cout << "Enter average usage of each element" << "\n";
+
+    for (auto it = dataset.begin(); it != dataset.end(); it++) {
+        int temp;
+        cout << "Enter avg usage of " << it->first << "\n";
+        cin >> temp;
+
+        avgdata.insert({it->first, temp});
     }
     
     /*
