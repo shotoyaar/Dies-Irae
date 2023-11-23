@@ -117,6 +117,12 @@ class Huffmancoding {
 
             if (temp == 1) {
                 Huffmancoding::restock(m1, avg, size);
+
+                cout << "The frequency table after restocking necessary elements:" << "\n";
+
+                for (auto it = m1.begin(); it != m1.end(); it++) {
+                    cout << it->first << " : " << it->second << "\n";
+                }
             }
 
             else {
