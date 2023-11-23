@@ -4,7 +4,7 @@
 #include <string>
 #include <queue>
 #include <map>
-#include <random>
+//#include <random>
 
 #define MIN_FREQ 10
 #define SAFE 5
@@ -97,7 +97,7 @@ class Huffmancoding {
             storecodes(root->right, str+"1");
         }
 
-        static void alert(map<char, int> m1, map<char, int> avg) {
+        static void alert(map<char, int> m1, map<char, int> avg, int size) {
             vector<char> restock;
 
             for (auto it1 = m1.begin(), it2 = avg.begin(); it1 != m1.end(), it2 != avg.end(); it1++, it2++) {
@@ -111,14 +111,28 @@ class Huffmancoding {
             for (int i= 0; i < restock.size(); i++) {
                 cout << restock[i] << "\n";
             }
+
+            cout << "Would you like to restock them right now?" << "\n" << "Answer 1 if yes, 0 if no." << "\n";
+            int temp;
+            cin >> temp;
+
+            if (temp == 1) {
+                Huffmancoding::restock(m1, avg, size);
+            }
+
+            else {
+                cout << "Thankyou" << "\n";
+            }
         }
 
-        static void restock(map<char, int> m1, map<char, int> avg) {
+        static void restock(map<char, int> m1, map<char, int> avg, int size) {
             for (auto it1 = m1.begin(), it2 = avg.begin(); it1 != m1.end(), it2 != avg.end(); it1++, it2++) {
                 if (((it1->second - it2->second) <= 0) || ((it1->second - it2->second) <= MIN_FREQ)) {
                     it1->second = it1->second + (MIN_FREQ*SAFE);
                 }
             }
+
+            Huffmancoding::Codes(m1, size);
         }
 };
 
@@ -177,6 +191,16 @@ int main() {
     for (auto it2 = Huffmancoding::codes.begin(); it2 != Huffmancoding::codes.end(); it2++) {
         cout << it2->first << ": " << it2->second << "\n";
     }
+
+    cout << "Would you like to check if the current stocks are enough?" << "\n" << "Answer 1 if yes, 0 if no." << "\n";
+    int ip;
+    cin >> ip;
+
+    if (ip == 1) {
+        Huffmancoding::alert(dataset, avgdata, size);
+    }
+
+    else cout << "Thankyou" << "\n";
 
     return 0;
 }
