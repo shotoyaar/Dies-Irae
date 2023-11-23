@@ -4,7 +4,6 @@
 #include <string>
 #include <queue>
 #include <map>
-//#include <random>
 
 #define MIN_FREQ 10
 #define SAFE 5
